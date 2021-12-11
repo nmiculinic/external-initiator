@@ -32,14 +32,13 @@ func createEthManager(p subscriber.Type, config store.Subscription) ethManager {
 	}
 
 	var topics [][]common.Hash
-	var t []common.Hash
 	for _, value := range config.Ethereum.Topics {
 		if len(value) < 1 {
+			topics = append(topics, nil)
 			continue
 		}
-		t = append(t, common.HexToHash(value))
+		topics = append(topics, []common.Hash{common.HexToHash(value)})
 	}
-	topics = append(topics, t)
 
 	return ethManager{
 		fq: &filterQuery{
